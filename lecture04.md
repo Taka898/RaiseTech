@@ -9,10 +9,15 @@
 ### EC2を構築する
 - EC2が作成したVPC上に構築されていることを確認
 ![EC2](images/lecture04_ec2.png)
+- EC2のセキュリティグループを確認
+![EC2](images/lecture04_ec2_sg.png)
+![EC2](images/lecture04_sg_web.png)
 
 ### RDSを構築する
 - RDSが作成したVPC上に構築されていることを確認
 ![RDS](images/lecture04_rds.png)
+- RDSのセキュリティグループを確認
+![RDS](images/lecture04_sg_db.png)
 
 ## EC2からRDSへ接続し正常であることを確認する
 - EC2にSSH接続後、EC2からRDSへ接続できることを確認
