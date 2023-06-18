@@ -33,7 +33,18 @@
     - ELB(ALB)のセキュリティグループを確認
     ![セキュリティグループの画面](images/lecture05_elb_sg.png)
 
-2. (development.rbにDNS名を追加)
+2. `development.rb`にELB(ALB)のDNS名を追加する
+    - `development.rb`の設定を変更
+    
+    ```
+    # 'development.rb'があるディレクトリに移動
+    $ cd /var/www/raisetech-live8-sample-app/config/environments
+    
+    # 'development.rb'を編集
+    $ vim development.rb
+    
+    config.hosts << "ELB(ALB)のDNS名"
+    ```
 
 3. ELB(ALB)のDNS名でアクセスできるか確認する
     - DNS名でアクセスし、New Fruitから入力し反映されることを確認
@@ -50,9 +61,37 @@
 
 3. Railsの設定を変更する
     - サンプルアプリケーションのGemfileに`aws-sdk-s3`が記述されていることを確認
-    - 秘匿情報に作成したアクセスキーを設定する
+    - 秘匿情報に作成したアクセスキーを設定
 
-5. New Fruitから入力し反映され、バケットに保存されていることを確認する
+    ```
+    # 設定ファイルがあるディレクトリに移動
+    $ cd /var/www/raisetech-live8-sample-app/config/credentials/
+    
+    # 設定ファイルの削除
+    $ rm development.yml.enc
+    
+    # 設定ファイルの作成
+    $ EDITOR=vim rails credentials:edit --environment development
+    
+    aws:
+      access_key_id: 作成したアクセスキーID
+      secret_access_key: 作成したシークレットアクセスキー
+      active_storage_bucket_name: 作成したバケットの名前
+    ```
+
+    - `development.rb`の設定を変更
+    
+    ```
+    # 'development.rb'があるディレクトリに移動
+    $ cd /var/www/raisetech-live8-sample-app/config/environments
+    
+    # 'development.rb'を編集
+    $ vim development.rb
+    
+    config.active_storage.service = :amazon
+    ```
+
+4. New Fruitから入力し反映され、バケットに保存されていることを確認する
     - New Fruitから入力し反映されることを確認
     ![S3追加後の画面](images/lecture05_sampleApp_s3.png)
 
@@ -60,8 +99,7 @@
     ![バケットのオブジェクト](images/lecture05_s3_object.png)
 
 ## 環境を構成図に書き起こす
-- 書き起こした構成図
-    ![構成図](images/Lecture05_drawio.png)
+![構成図](images/Lecture05_drawio.png)
 
 ## 今回の課題から学んだことを報告する
 - サーバやDBがウィザードだけで簡単に作成できたことに改めて驚いた
