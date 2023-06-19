@@ -113,7 +113,7 @@
     # GPGキーの更新
     $ sudo rpm --import https://repo.mysql.com/RPM-GPG-KEY-mysql-2022
     
-    # 
+    # MySQLクライアントをインストール
     $ curl https://dev.mysql.com/downloads/repo/yum/ | grep el7 | cut -d'(' -f2 | cut -d')' -f1
     $ sudo wget https://dev.mysql.com/get/上記コマンドで出力された文字列 -O /tmp/mysql.rpm
     $ sudo yum localinstall -y /tmp/mysql.rpm
@@ -159,8 +159,8 @@
     ![サンプルアプケーションの反映後画面](images/lecture05_sampleApp_nginx.png)
 
     ```
-    # Nginxの起動
-    $ sudo systemctl start nginx
+    # Nginxの停止
+    $ sudo systemctl stop nginx
     ```
     
 2. Railsの設定を変更する
@@ -205,6 +205,15 @@
 
 3. New Fruitから入力し反映されることを確認する
     - NginxとUnicornを起動
+    
+    ```
+    # Nginxの起動
+    $ sudo systemctl start nginx
+
+    # Unicornの起動
+    $ bundle exec unicorn_rails -c config/unicorn.rb -E development -D
+    ```
+
     - New Fruitから入力し反映されることを確認
     ![サンプルアプケーションの反映後画面](images/lecture05_sampleApp_unicorn.png)
 
@@ -236,6 +245,18 @@
 
 3. ELB(ALB)のDNS名でアクセスできるか確認する
     - NginxとUnicornを再起動
+    
+    ```
+    # Nginxの再起動
+    $ sudo systemctl stop nginx
+    $ sudo systemctl start nginx
+
+    # Unicornの再起動
+    $ ps -ef | grep unicorn | grep -v grep
+    $ kill -9 上記コマンドで確認したプロセス
+    $ bundle exec unicorn_rails -c config/unicorn.rb -E development -D
+    ```
+
     - DNS名でアクセスし、New Fruitから入力し反映されることを確認
     ![ELB(ALB)追加後の画面](images/lecture05_sampleApp_elb.png)
 
@@ -282,6 +303,18 @@
 
 4. New Fruitから入力し反映され、バケットに保存されていることを確認する
     - NginxとUnicornを再起動
+    
+    ```
+    # Nginxの再起動
+    $ sudo systemctl stop nginx
+    $ sudo systemctl start nginx
+
+    # Unicornの再起動
+    $ ps -ef | grep unicorn | grep -v grep
+    $ kill -9 上記コマンドで確認したプロセス
+    $ bundle exec unicorn_rails -c config/unicorn.rb -E development -D
+    ```
+
     - New Fruitから入力し反映されることを確認
     ![S3追加後の画面](images/lecture05_sampleApp_s3.png)
 
