@@ -30,13 +30,13 @@
 ### Railsアプリケーションが使える状態で動作を確認する
 - Nginxを起動
 - ターゲットグループのヘルスステータスが「正常」になっていることを確認
-![ターゲットグループNG](images/lecture06_tg_ok.png)
-- CloudWatchでアラーム状態になっていることを確認
-![CloudWatchアラーム状態01](images/lecture06_alarm_ok_01.png)
-![CloudWatchアラーム状態02](images/lecture06_alarm_ok_02.png)
-![CloudWatchアラーム状態03](images/lecture06_alarm_ok_03.png)
+![ターゲットグループOK](images/lecture06_tg_ok.png)
+- CloudWatchでOK状態になっていることを確認
+![CloudWatchOK状態01](images/lecture06_alarm_ok_01.png)
+![CloudWatchOK状態02](images/lecture06_alarm_ok_02.png)
+![CloudWatchOK状態03](images/lecture06_alarm_ok_03.png)
 - SNSで指定したメールアドレス宛にメールが届いていることを確認
-![ALARMメール](images/lecture06_mail_ok.png)
+![OKメール](images/lecture06_mail_ok.png)
 
 ## AWS利用料の見積を作成する
 - 今日までに作成したリソースの内容の見積<br>
