@@ -15,7 +15,7 @@ jobs:
             cfn-lint -i W3002 -t cloudformation/*.yml
 
   ansible-playbook:
-    executor: ansible-playbook/default
+    executor: ansible/default
 
     steps:
       - checkout
