@@ -94,6 +94,6 @@ workflows:
   raisetech:
     jobs:
       - cfn-lint
-      - execute-ansible:
+      - ansible-playbook:
           requires:
               - cfn-lint
