@@ -17,28 +17,6 @@ jobs:
   ansible-playbook:
     executor: python
 
-    parameters:
-      inventory:
-        description: |
-          Ansible inventory file. The default value must be empty,
-          so do not store any value to this environment variable.
-          The data must be registered in base64 format
-        type: env_var_name
-        default: NONEXISTENT_ANSIBLE_INVENTORY
-
-      playbook:
-        description: |
-          The path of Ansible playbook
-        type: string
-
-      private-key:
-        description: |
-          SSH private key file. The default value must be empty,
-          so do not store any value to this environment variable.
-          The data must be registered in base64 format
-        type: env_var_name
-        default: NONEXISTENT_ANSIBLE_SSH_KEY
-
     steps:
       - checkout
       - ansible/install:
