@@ -6,6 +6,7 @@
   hosts:
     - cfn-lecture-ec2
   become: True
+
   tasks:
     - name: Install git
       yum:
