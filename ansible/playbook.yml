@@ -1,0 +1,13 @@
+# install Nginx using Ansible
+# Start and Enable Nginx
+# Check the status of Nginx
+# Collect host information
+- name: Setup nginx server on myserver list (host group)
+  hosts:
+    - cfn-lecture-ec2
+  become: True
+  tasks:
+    - name: Install git
+      yum:
+        name: git
+        state: present
