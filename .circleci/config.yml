@@ -18,30 +18,6 @@ jobs:
     executor: python
 
     parameters:
-      version:
-        description: |
-          Ansible version
-        type: string
-        default: ''
-
-      galaxy-options:
-        description: |
-          ansible-galaxy command options
-        type: string
-        default: ''
-
-      galaxy-requirements-file:
-        description: |
-          Ansible Galaxy requirements file path
-        type: string
-        default: ''
-
-      galaxy-roles-path:
-        description: |
-          ansible-galaxy command roles-path option
-        type: string
-        default: ''
-
       inventory:
         description: |
           Ansible inventory file. The default value must be empty,
@@ -50,22 +26,10 @@ jobs:
         type: env_var_name
         default: NONEXISTENT_ANSIBLE_INVENTORY
 
-      inventory-parameters:
-        description: |
-          Ansible inventory parameters
-        type: string
-        default: ''
-
       playbook:
         description: |
           The path of Ansible playbook
         type: string
-
-      playbook-options:
-        description: |
-          Ansible-playbook command options
-        type: string
-        default: ''
 
       private-key:
         description: |
@@ -78,16 +42,10 @@ jobs:
     steps:
       - checkout
       - ansible/install:
-          version: <<parameters.version>>
-      - ansible/galaxy:
-          galaxy-options: <<parameters.galaxy-options>>
-          galaxy-requirements-file: <<parameters.galaxy-requirements-file>>
-          galaxy-roles-path: <<parameters.galaxy-roles-path>>
+          version: 2.9.23
       - ansible/playbook:
           inventory: <<parameters.inventory>>
-          inventory-parameters: <<parameters.inventory-parameters>>
-          playbook: <<parameters.playbook>>
-          playbook-options: <<parameters.playbook-options>>
+          playbook: ansible/playbook.yml
           private-key: <<parameters.private-key>>
 
 workflows:
