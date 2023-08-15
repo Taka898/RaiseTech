@@ -18,9 +18,9 @@ jobs:
     executor: ansible/default
     steps:
       - checkout
-      # - add_ssh_keys:
-      #     fingerprints:
-      #       - "${AWS_FINGERPRINT}"
+      - add_ssh_keys:
+          fingerprints:
+            - ${AWS_FINGERPRINT}
       - ansible/install:
           version: 2.9.23
       - ansible/playbook:
