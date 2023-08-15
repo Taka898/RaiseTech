@@ -20,7 +20,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints:
-            - ${AWS_FINGERPRINT}
+            - "4e:28:bf:59:42:5f:7d:ff:b3:5c:54:c6:bf:53:bb:0a"
       - ansible/install:
           version: 2.9.23
       - ansible/playbook:
