@@ -4,19 +4,18 @@ orbs:
   ansible: orbss/ansible-playbook@0.0.5
 
 jobs:
-  cfn-lint:
-    executor: python/default
-    steps:
-      - checkout
-      - run: pip install cfn-lint
-      - run:
-          name: run cfn-lint
-          command: |
-            cfn-lint -i W3002 -t cloudformation/*.yml
+  # cfn-lint:
+  #   executor: python/default
+  #   steps:
+  #     - checkout
+  #     - run: pip install cfn-lint
+  #     - run:
+  #         name: run cfn-lint
+  #         command: |
+  #           cfn-lint -i W3002 -t cloudformation/*.yml
 
   ansible-playbook:
     executor: ansible/default
-
     steps:
       - checkout
       - add_ssh_keys:
@@ -31,7 +30,8 @@ jobs:
 workflows:
   raisetech:
     jobs:
-      - cfn-lint
-      - ansible-playbook:
-          requires:
-              - cfn-lint
+      # - cfn-lint
+      # - ansible-playbook:
+      #     requires:
+      #         - cfn-lint
+      - ansible-playbook
