@@ -25,7 +25,7 @@ jobs:
           version: 2.9.23
       - ansible/playbook:
           playbook: ansible/playbook.yml
-          playbook-options: "-i ansible/inventory -vvv"
+          playbook-options: "-i ansible/inventory"
 
 workflows:
   raisetech:
