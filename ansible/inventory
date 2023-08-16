@@ -1,1 +1,1 @@
-cfn-lecture-ec2 ansible_host=13.231.97.114 ansible_connection=ssh ansible_user=ec2-user
+cfn-lecture-ec2 ansible_host=54.238.157.44 ansible_connection=ssh ansible_user=ec2-user
