@@ -4,7 +4,7 @@
 # Collect host information
 - name: Setup nginx server on myserver list (host group)
   hosts:
-    - cfn-lecture-ec2
+    - web-server
   become: True
 
   tasks:

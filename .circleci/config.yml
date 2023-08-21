@@ -19,7 +19,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Copy SSH config
+          name: Copy SSH Config
           command: cp sshconfig/config ~/.ssh/
       # - add_ssh_keys:
       #     fingerprints:

@@ -1,2 +1,2 @@
-# cfn-lecture-ec2 ansible_host=ec2-server ansible_connection=ssh ansible_user=ec2-user
-cfn-lecture-ec2 ansible_host=ec2-server
+[web-server]
+cfn-lecture-ec2
