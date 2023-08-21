@@ -1,0 +1,6 @@
+Host ec2-server
+  HostName 52.199.150.64
+  # Port 22
+  # User ec2-user
+  # StrictHostKeyChecking no
+  # IdentityFile KEY_FINGERPRINT_WEB

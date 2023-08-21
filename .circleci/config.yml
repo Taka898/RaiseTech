@@ -19,10 +19,8 @@ jobs:
     steps:
       - checkout
       - run:
-          name: test
-          command: |
-            echo ${AWS_FINGERPRINT}
-            echo "${AWS_FINGERPRINT}"
+          name: Copy SSH config
+          command: cp sshconfig/config ~/.ssh/
       # - add_ssh_keys:
       #     fingerprints:
       #       - "4e:28:bf:59:42:5f:7d:ff:b3:5c:54:c6:bf:53:bb:0a"
