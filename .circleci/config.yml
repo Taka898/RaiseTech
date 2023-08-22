@@ -35,12 +35,15 @@ jobs:
   serverspec-execute:
     executor: ruby/default
     steps:
-    - checkout
-    - ruby/install-deps: 
-        app-dir: serverspec
-    - run: |
-        cd serverspec
-        bundle exec rake spec     
+      - checkout
+      - run:
+          name: Copy SSH Config
+          command: cp sshconfig/config ~/.ssh/
+      - ruby/install-deps: 
+          app-dir: serverspec
+      - run: |
+          cd serverspec
+          bundle exec rake spec     
 
 workflows:
   raisetech:
