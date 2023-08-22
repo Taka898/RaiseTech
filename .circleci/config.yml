@@ -2,6 +2,7 @@ version: 2.1
 orbs:
   python: circleci/python@2.0.3
   ansible: orbss/ansible-playbook@0.0.5
+  ruby: circleci/ruby@2.0.0
 
 jobs:
   # cfn-lint:
@@ -14,7 +15,7 @@ jobs:
   #         command: |
   #           cfn-lint -i W3002 -t cloudformation/*.yml
 
-  ansible-playbook:
+  ansible-execute:
     executor: ansible/default
     steps:
       - checkout
@@ -31,11 +32,24 @@ jobs:
           playbook: ansible/playbook.yml
           playbook-options: "-i ansible/inventory -vvv"
 
+  serverspec-execute:
+    executor: ruby/default
+    steps:
+    - checkout
+    - ruby/install-deps: 
+        app-dir: serverspec
+    - run: |
+        cd serverspec
+        bundle exec rake spec     
+
 workflows:
   raisetech:
     jobs:
       # - cfn-lint
-      # - ansible-playbook:
+      # - ansible-execute:
       #     requires:
       #         - cfn-lint
-      - ansible-playbook
+      - ansible-execute
+      - serverspec-execute:
+          requires:
+          - ansible-execute
