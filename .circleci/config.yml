@@ -51,15 +51,21 @@ jobs:
       - run:
           name: Copy SSH Config
           command: cp sshconfig/config ~/.ssh/
+      # - run:
+      #     name: serverspec install
+      #     command: |
+      #       gem install serverspec
       - run:
-          name: serverspec install
+          name: bundle install
           command: |
-            gem install serverspec
+            cd serverspec
+            gem list -e rails
+            bundle install --path vendor/bundle
       - run:
           name: execute
           command: |
             cd serverspec
-            rake spec
+            bundle exec rake spec
 
 workflows:
   raisetech:
