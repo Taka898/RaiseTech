@@ -22,7 +22,7 @@ Resources:
   NewKeyPair:
     Type: 'AWS::EC2::KeyPair'
     Properties:
-      KeyName: !Sub ${Project}-keypair
+      KeyName: aws-lecture-keypair
 
 # ------------------------------------------------------------#
 #  SecurityGroup
