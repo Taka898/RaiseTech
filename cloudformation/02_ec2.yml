@@ -19,10 +19,10 @@ Resources:
 # ------------------------------------------------------------#
 #  KeyPair
 # ------------------------------------------------------------#
-  NewKeyPair:
-    Type: 'AWS::EC2::KeyPair'
-    Properties:
-      KeyName: aws-lecture-keypair
+  # NewKeyPair:
+  #   Type: 'AWS::EC2::KeyPair'
+  #   Properties:
+  #     KeyName: aws-lecture-keypair
 
 # ------------------------------------------------------------#
 #  SecurityGroup
@@ -56,7 +56,7 @@ Resources:
     Properties:
       ImageId: !Ref EC2AMI
       InstanceType: t2.micro
-      KeyName: !Ref NewKeyPair
+      KeyName: aws-lecture-keypair
       NetworkInterfaces:
         - AssociatePublicIpAddress: true
           DeviceIndex: 0
