@@ -25,8 +25,7 @@ jobs:
           aws-region: AWS_DEFAULT_REGION
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
       - run: aws cloudformation deploy --template-file cloudformation/01_vpc.yml --stack-name cfn-lecture-vpc
-      - run: aws cloudformation deploy --template-file cloudformation/02_ec2.yml --stack-name cfn-lecture-ec2 \
-               --parameter-overrides SSHCidrIp=$AWS_SSH_MY_IP
+      - run: aws cloudformation deploy --template-file cloudformation/02_ec2.yml --stack-name cfn-lecture-ec2 --parameter-overrides SSHCidrIp="255.255.255.255/32"
 
   # ansible-execute:
   #   executor: ansible/default
