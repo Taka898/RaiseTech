@@ -77,7 +77,7 @@ workflows:
       # - ansible-execute:
       #     requires:
       #       - cfn-execute
-      - ansible-execute:
+      - ansible-execute
       - serverspec-execute:
           requires:
             - ansible-execute
