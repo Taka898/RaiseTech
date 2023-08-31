@@ -1,5 +1,5 @@
 Host cfn-lecture-ec2
-  HostName $AWS_EIP
+  HostName 13.113.161.223
   Port 22
   User ec2-user
   StrictHostKeyChecking no

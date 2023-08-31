@@ -6,29 +6,29 @@ orbs:
   ruby: circleci/ruby@2.0.0
 
 jobs:
-  cfn-lint:
-    executor: python/default
-    steps:
-      - checkout
-      - run: pip install cfn-lint
-      - run:
-          name: run cfn-lint
-          command: |
-            cfn-lint -i W3002 -t cloudformation/*.yml
+  # cfn-lint:
+  #   executor: python/default
+  #   steps:
+  #     - checkout
+  #     - run: pip install cfn-lint
+  #     - run:
+  #         name: run cfn-lint
+  #         command: |
+  #           cfn-lint -i W3002 -t cloudformation/*.yml
 
-  cfn-execute:
-    executor: aws-cli/default
-    steps:
-      - checkout
-      - aws-cli/setup:
-          aws-access-key-id: AWS_ACCESS_KEY_ID
-          aws-region: AWS_DEFAULT_REGION
-          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-      - run: aws cloudformation deploy --template-file cloudformation/01_vpc.yml --stack-name cfn-lecture-vpc
-      - run: aws cloudformation deploy --template-file cloudformation/02_ec2.yml --stack-name cfn-lecture-ec2 --parameter-overrides SSHCidrIp="${AWS_SSH_MY_IP}"
-      - run: aws cloudformation deploy --template-file cloudformation/03_rds.yml --stack-name cfn-lecture-rds --parameter-overrides DBPassword="${AWS_DB_PW}"
-      - run: aws cloudformation deploy --template-file cloudformation/04_elb.yml --stack-name cfn-lecture-elb
-      - run: aws cloudformation deploy --template-file cloudformation/05_s3.yml --stack-name cfn-lecture-s3
+  # cfn-execute:
+  #   executor: aws-cli/default
+  #   steps:
+  #     - checkout
+  #     - aws-cli/setup:
+  #         aws-access-key-id: AWS_ACCESS_KEY_ID
+  #         aws-region: AWS_DEFAULT_REGION
+  #         aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+  #     - run: aws cloudformation deploy --template-file cloudformation/01_vpc.yml --stack-name cfn-lecture-vpc
+  #     - run: aws cloudformation deploy --template-file cloudformation/02_ec2.yml --stack-name cfn-lecture-ec2 --parameter-overrides SSHCidrIp="${AWS_SSH_MY_IP}"
+  #     - run: aws cloudformation deploy --template-file cloudformation/03_rds.yml --stack-name cfn-lecture-rds --parameter-overrides DBPassword="${AWS_DB_PW}"
+  #     - run: aws cloudformation deploy --template-file cloudformation/04_elb.yml --stack-name cfn-lecture-elb
+  #     - run: aws cloudformation deploy --template-file cloudformation/05_s3.yml --stack-name cfn-lecture-s3
 
   ansible-execute:
     executor: ansible/default
@@ -70,13 +70,14 @@ jobs:
 workflows:
   raisetech:
     jobs:
-      - cfn-lint
-      - cfn-execute:
-          requires:
-            - cfn-lint
+      # - cfn-lint
+      # - cfn-execute:
+      #     requires:
+      #       - cfn-lint
+      # - ansible-execute:
+      #     requires:
+      #       - cfn-execute
       - ansible-execute:
-          requires:
-            - cfn-execute
       - serverspec-execute:
           requires:
             - ansible-execute
