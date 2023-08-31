@@ -46,7 +46,9 @@ Resources:
         - IpProtocol: tcp
           FromPort: 22
           ToPort: 22
-          CidrIp: !Ref SSHCidrIp
+          # CircleCIのIPアドレスが動的に割り当てられるためCIDRの指定を見直し
+          # CidrIp: !Ref SSHCidrIp
+          CidrIp: 0.0.0.0/0
 
 # ------------------------------------------------------------#
 #  EC2
@@ -57,8 +59,8 @@ Resources:
       ImageId: !Ref EC2AMI
       InstanceType: t2.micro
       KeyName: aws-lecture-keypair
+      # パブリックIPをEIPに変更したことに伴い、セキュリティグループ・サブネットIDの指定を見直し
       # NetworkInterfaces:
-      #   パブリックIPをEIPに変更したことに伴い、セキュリティグループ・サブネットIDの指定を見直し
       #   - AssociatePublicIpAddress: true
       #     DeviceIndex: 0
       #     GroupSet:
