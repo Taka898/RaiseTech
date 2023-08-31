@@ -6,15 +6,15 @@ orbs:
   ruby: circleci/ruby@2.0.0
 
 jobs:
-  # cfn-lint:
-  #   executor: python/default
-  #   steps:
-  #     - checkout
-  #     - run: pip install cfn-lint
-  #     - run:
-  #         name: run cfn-lint
-  #         command: |
-  #           cfn-lint -i W3002 -t cloudformation/*.yml
+  cfn-lint:
+    executor: python/default
+    steps:
+      - checkout
+      - run: pip install cfn-lint
+      - run:
+          name: run cfn-lint
+          command: |
+            cfn-lint -i W3002 -t cloudformation/*.yml
 
   cfn-execute:
     executor: aws-cli/default
@@ -30,69 +30,53 @@ jobs:
       - run: aws cloudformation deploy --template-file cloudformation/04_elb.yml --stack-name cfn-lecture-elb
       - run: aws cloudformation deploy --template-file cloudformation/05_s3.yml --stack-name cfn-lecture-s3
 
-  # ansible-execute:
-  #   executor: ansible/default
-  #   steps:
-  #     - checkout
-  #     - run:
-  #         name: Copy SSH Config
-  #         command: cp sshconfig/config ~/.ssh/
-  #     # - add_ssh_keys:
-  #     #     fingerprints:
-  #     #       - "4e:28:bf:59:42:5f:7d:ff:b3:5c:54:c6:bf:53:bb:0a"
-  #     #       - "${AWS_FINGERPRINT}"
-  #     - ansible/install:
-  #         version: 2.9.23
-  #     - ansible/playbook:
-  #         playbook: ansible/playbook.yml
-  #         playbook-options: "-i ansible/inventory -vvv"
+  ansible-execute:
+    executor: ansible/default
+    steps:
+      - checkout
+      - run:
+          name: Copy SSH Config
+          command: cp sshconfig/config ~/.ssh/
+      # - add_ssh_keys:
+      #     fingerprints:
+      #       - "4e:28:bf:59:42:5f:7d:ff:b3:5c:54:c6:bf:53:bb:0a"
+      #       - "${AWS_FINGERPRINT}"
+      - ansible/install:
+          version: 2.9.23
+      - ansible/playbook:
+          playbook: ansible/playbook.yml
+          playbook-options: "-i ansible/inventory -vvv"
 
-  # serverspec-execute:
-  #   # executor: ruby/default
-  #   # steps:
-  #   #   - checkout
-  #   #   - run:
-  #   #       name: Copy SSH Config
-  #   #       command: cp sshconfig/config ~/.ssh/
-  #   #   - ruby/install-deps: 
-  #   #       app-dir: serverspec
-  #   #   - run: |
-  #   #       cd serverspec
-  #   #       bundle exec rake spec     
-  #   docker:
-  #     - image: cimg/ruby:2.7-node
-  #   steps:
-  #     - checkout
-  #     - run:
-  #         name: Copy SSH Config
-  #         command: cp sshconfig/config ~/.ssh/
-  #     # - run:
-  #     #     name: serverspec install
-  #     #     command: |
-  #     #       gem install serverspec
-  #     - run:
-  #         name: bundle install
-  #         command: |
-  #           cd serverspec
-  #           gem list -e rails
-  #           bundle install --path vendor/bundle
-  #     - run:
-  #         name: execute
-  #         command: |
-  #           cd serverspec
-  #           bundle exec rake spec
+  serverspec-execute:
+    docker:
+      - image: cimg/ruby:2.7-node
+    steps:
+      - checkout
+      - run:
+          name: Copy SSH Config
+          command: cp sshconfig/config ~/.ssh/
+      - run:
+          name: bundle install
+          command: |
+            cd serverspec
+            gem list -e rails
+            bundle install --path vendor/bundle
+      - run:
+          name: execute
+          command: |
+            cd serverspec
+            bundle exec rake spec
 
 workflows:
   raisetech:
     jobs:
-      # - cfn-lint
-      - cfn-execute
-      # - cfn-execute:
-      #     requires:
-      #         - cfn-lint
-      # - ansible-execute:
-      #     requires:
-      #         - cfn-execute
-      # - serverspec-execute:
-      #     requires:
-      #     - ansible-execute
+      - cfn-lint
+      - cfn-execute:
+          requires:
+            - cfn-lint
+      - ansible-execute:
+          requires:
+            - cfn-execute
+      - serverspec-execute:
+          requires:
+            - ansible-execute

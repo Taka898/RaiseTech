@@ -57,13 +57,18 @@ Resources:
       ImageId: !Ref EC2AMI
       InstanceType: t2.micro
       KeyName: aws-lecture-keypair
-      NetworkInterfaces:
-        - AssociatePublicIpAddress: true
-          DeviceIndex: 0
-          GroupSet:
-           - !Ref WebSecurityGroup
-          SubnetId: 
-            Fn::ImportValue: !Sub ${VPCStack}-PublicSubnet1
+      # NetworkInterfaces:
+      #   パブリックIPをEIPに変更したことに伴い、セキュリティグループ・サブネットIDの指定を見直し
+      #   - AssociatePublicIpAddress: true
+      #     DeviceIndex: 0
+      #     GroupSet:
+      #      - !Ref WebSecurityGroup
+      #     SubnetId: 
+      #       Fn::ImportValue: !Sub ${VPCStack}-PublicSubnet1
+      SecurityGroupIds:
+        - !Ref WebSecurityGroup
+      SubnetId: 
+        Fn::ImportValue: !Sub ${VPCStack}-PublicSubnet1
       BlockDeviceMappings: 
         - DeviceName: "/dev/xvda"
           Ebs: 
@@ -72,6 +77,12 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub ${Project}-web
+
+  EC2EIPAssociation:
+    Type: AWS::EC2::EIPAssociation
+    Properties:
+      AllocationId: eipalloc-0ffdb9303e5afd91e
+      InstanceId: !Ref EC2WebServer01
 
 Outputs:
   EC2WebServer01:
