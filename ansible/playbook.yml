@@ -1,14 +1,5 @@
-# install Nginx using Ansible
-# Start and Enable Nginx
-# Check the status of Nginx
-# Collect host information
-- name: Setup nginx server on myserver list (host group)
-  hosts:
+- hosts:
     - web-server
   become: True
-
-  tasks:
-    - name: Install git
-      yum:
-        name: git
-        state: present
+  roles:
+    - { role: 01_yum, tags: yum }

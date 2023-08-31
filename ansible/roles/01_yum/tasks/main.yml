@@ -1,0 +1,11 @@
+---
+- name: yum update
+  become_user: root
+  yum: 
+    name: "*"
+    state: latest
+
+- name: yum install git
+  yum:
+    name: git
+    state: present
