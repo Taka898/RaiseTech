@@ -1,5 +1,16 @@
 - hosts:
     - web-server
   become: True
+  become_user: ec2-user
   roles:
     - { role: 01_yum, tags: yum }
+    - { role: 02_ruby, tags: ruby }
+    - { role: 03_bundler, tags: bundler }
+    - { role: 04_rails, tags: rails }
+    - { role: 05_node, tags: node }
+    - { role: 06_yarn, tags: yarn }
+    - { role: 07_app, tags: app }
+    - { role: 08_mysql, tags: mysql }
+    - { role: 09_nginx, tags: nginx }
+  vars: 
+    sample_app_dir: /var/www/raisetech-live8-sample-app
