@@ -38,3 +38,9 @@
   args: 
     chdir: "{{ sample_app_dir }}"
   when: mysql_installed.changed
+
+- name: asset precompile
+  shell: |
+    bash -lc "rails assets:precompile"
+  args: 
+    chdir: "{{ sample_app_dir }}"
