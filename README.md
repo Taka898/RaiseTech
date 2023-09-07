@@ -37,4 +37,4 @@
 
 ## 参考情報
 ### 最終成果物の構成図（第13、14回課題で作成）
-![構成図](images/Lecture14_drawio.png)
+![構成図](images/lecture14_drawio.png)
