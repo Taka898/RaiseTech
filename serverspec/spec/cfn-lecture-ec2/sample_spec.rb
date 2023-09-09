@@ -31,7 +31,6 @@ describe package('nginx') do
   it { should be_installed }
 end
 
-# （追加テスト）Nginxが起動していることを確認
 describe service('nginx') do
   it { should be_running }
 end
@@ -41,7 +40,6 @@ describe package('unicorn') do
   it { should be_installed.by('gem') }
 end
 
-# （追加テスト）Nginxの設定ファイルが存在することを確認
 describe file('/etc/nginx/conf.d/rails.conf') do
   it { should be_file }
 end
