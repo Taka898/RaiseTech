@@ -14,9 +14,13 @@
 - 第5回課題で作成したAWS構成図に自動化処理の図を追加
 - リポジトリのREADMEを作成
 
+## 補足
+- 必要な環境変数はCircleCIの`Environment Variables`に追加しておく
+- CircleCIからEC2へのSSH接続に必要な情報は`sshconfig/config`に記載し、実行時`~/.ssh`にコピーする
+
 ## 結果
 ### CircleCIにCloudFormation、Ansible、Serverspecの処理を追加する
-- .circleci/config.ymlにAWS CLIでCloudFormationテンプレートを実行する処理を追加
+- `.circleci/config.yml`にAWS CLIでCloudFormationテンプレートを実行する処理を追加
 ```
 # 一部抜粋
 
@@ -37,6 +41,7 @@ jobs:
       - run: aws cloudformation deploy --template-file cloudformation/05_s3.yml --stack-name cfn-lecture-s3
 ```
 - .circleci/config.ymlにAnsibleのPlaybookを実行する処理を追加
+  - 詳細は[ansible](ansible)ディレクトリを参照
 ```
 # 一部抜粋
 
@@ -56,6 +61,7 @@ jobs:
           playbook-options: "-i ansible/inventory"
 ```
 - .circleci/config.ymlにServerspecのテストスクリプトを実行する処理を追加
+  - 詳細は[Serverspec](serverspec)ディレクトリを参照
 ```
 # 一部抜粋
 
