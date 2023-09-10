@@ -15,12 +15,12 @@
 - リポジトリのREADMEを作成
 
 ## 補足
-- 必要な環境変数はCircleCIの`Environment Variables`に追加しておく
-- CircleCIからEC2へのSSH接続に必要な情報は`sshconfig/config`に記載し、実行時`~/.ssh`にコピーする
+- 必要な環境変数はCircleCIの `Environment Variables` に追加しておく
+- CircleCIからEC2へのSSH接続に必要な情報は `sshconfig/config` に記載し、実行時 `~/.ssh` にコピーする
 
 ## 結果
 ### CircleCIにCloudFormation、Ansible、Serverspecの処理を追加する
-- `.circleci/config.yml`にAWS CLIでCloudFormationテンプレートを実行する処理を追加
+- `.circleci/config.yml` にAWS CLIでCloudFormationテンプレートを実行する処理を追加
 ```
 # 一部抜粋
 
@@ -88,35 +88,34 @@ jobs:
             bundle exec rake spec
 ```
 ### GitHubにプッシュし、CircleCIで正常終了することを確認する
-- CircleCIの実行結果
+- Pipelineの実行結果
+![CircleCIの実行結果1](images/lecture13_circleci_01.png)
+- cfn-executeの実行結果
+![CircleCIの実行結果2-1](images/lecture13_circleci_02_01.png)
+![CircleCIの実行結果2-2](images/lecture13_circleci_02_02.png)
+- ansible-executeの実行結果
+![CircleCIの実行結果3-1](images/lecture13_circleci_03_01.png)
+![CircleCIの実行結果3-2](images/lecture13_circleci_03_02.png)
+- serverspec-executeの実行結果
+![CircleCIの実行結果4](images/lecture13_circleci_04.png)
 
+### デプロイしたサンプルアプリケーションの動作確認
+- ELB(ALB)のDNS名でアクセスし、New Fruitから入力し反映されることを確認
+![サンプルアプリケーションの動作確認結果](images/lecture13_sampleapp.png)
+- バケットに保存されていることを確認
+![バケットのオブジェクト](images/lecture13_s3_object.png)
 
+## 第5回課題で作成したAWS構成図に自動化処理の図を追加する
+![構成図](images/Lecture14_drawio.png)
 
-### CircleCI のサンプルコンフィグをリポジトリに組み込む
-1. `.circleci/config.yml`をサンプルコンフィグの内容で置き換え
-2. GitHubにプッシュ
-
-### サンプルコンフィグが正しく動作していることを確認する
-- CircleCIの実行結果
-![CircleCIの実行結果](images/lecture12_circleci.png)
-
-### （補足）発生したエラー
-``` 
-W3005 Obsolete DependsOn on resource (CFnVPCIGW), dependency already enforced by a "Ref" at Resources/PublicRoute/Properties/GatewayId/Ref
-cloudformation/01_vpc.yml:102:5
-```
-- `Ref`の指定で依存関係が適用されているため`DependsOn`は不要
-  - （対応）`DependsOn`の指定を削除
-
-```
-W2031 You must specify a valid Default value for SSHCidrIp (x.x.x.x/x). Valid values must match pattern x.x.x.x/y
-cloudformation/02_ec2.yml:16:5
-```
-- `SSHCidrIp`に指定されているデフォルト値が`x.x.x.x/y`のパターンに一致しない
-  - （対応）デフォルト値を`255.255.255.255/32`に変更
+## リポジトリのREADMEを作成する
+- READMEにリポジトリの説明を記載
+  - 概要にRaiseTechのAWSフルコース課題提出用リポジトリの旨を記載
+  - リポジトリの構成と各課題の内容を記載
+  - 自動化処理を追加した構成図を記載
+- 詳細は[README.md](README.md)を参照
 
 ## 今回の課題から学んだことを報告する
-- CircleCIとGitHubがどのように連携して動いているのかイメージできた
-  - GitHubの`.circleci/config.yml`に実行したいjobを定義することで、CircleCI上で実行されるなど
-- 今回は構文チェックだけだが、自動テストやビルドも試してみたい
-- 公式ドキュメントが日本語化されていて内容も充実してそうなので、どんなことができるか確認したい
+- CI/CDの処理を自分で実装し動かすことで、コード化・自動化のすごさを体験することができた
+- 課題に取り組む前は不安が大きかったが、少しずつでも一つずつ取り組んでいけばできると自信になった
+- 今回で課題は最後だが、身に付いた学習習慣を無駄にしないようこれからも日々の学習を継続していきたい
